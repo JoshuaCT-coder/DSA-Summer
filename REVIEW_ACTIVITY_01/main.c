@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 	insertFront(&list1, 10);
 	insertRear(&list1,80);
 	insertAt(&list1,40,4);
-	insertSorted(&list1,80);
+	insertSorted(&list1,40);
 	displayList(list1);
 
 	if(searchItem(list1,30)){
@@ -33,7 +33,5 @@ int main(int argc, char *argv[])
 	else{
 		printf("Item not in list");
 	}
-
-
 	return 0;
 }

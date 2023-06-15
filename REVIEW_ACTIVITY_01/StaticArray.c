@@ -32,11 +32,12 @@ List newList()
 
 void displayList(List list)
 {
-    for (int a = 0; a < list.count; a++)
+    printf("\nCurrent List:\n\n");
+    for (int a = 0; a < MAX; a++)
     {
-        printf(" index:%d  %d\n", a, list.elems[a]);
+        printf("    index:%d  %d\n", a, list.elems[a]);
     }
-    printf("\n%d\n", list.count);
+    printf("Element count: %d\n", list.count);
 }
 
 bool insertFront(List *list, DATA item)
@@ -75,16 +76,21 @@ bool insertSorted(List *list, DATA item)
 
     if (state)
     {
-        int i = list->count - 1;
-        while (i >= 0 && list->elems[i] > item)
+
+        int i = 0;
+
+        while (i < list->count && list->elems[i] != -1 && list->elems[i] <= item)
         {
-            list->elems[i + 1] = list->elems[i];
-            i--;
+            i++;
         }
 
-        list->elems[i + 1] = item;
+        for (int j = list->count - 1; j >= i; j--)
+        {
+            list->elems[j + 1] = list->elems[j];
+        }
+
+        list->elems[i] = item;
         list->count++;
-        printf("\nElement inserted at the In Sorted\n");
     }
     return state;
 }
@@ -106,6 +112,34 @@ bool insertAt(List *list, DATA item, int loc)
 
 bool searchItem(List list, DATA key)
 {
+    int left = 0;
+    int right = MAX;
+    int mid;
+    while (left <= right)
+    {
+        mid = left + (right - left) / 2;
+        while (left <= right && list.elems[left] == -1)
+        {
+            left++;
+        }
+        while (left <= right && list.elems[right] == -1)
+        {
+            right--;
+        }
+        while (list.elems[mid] != key)
+        {
+            if (list.elems[mid] < key)
+            {
+                left = mid + 1;
+            }
+            else
+            {
+                right = mid - 1;
+            }
+        }
+    }
+
+    return (list.elems[mid] == key);
 }
 
 int getItem(List list, DATA key);
