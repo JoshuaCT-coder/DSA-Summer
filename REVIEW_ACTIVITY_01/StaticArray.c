@@ -112,31 +112,23 @@ bool insertAt(List *list, DATA item, int loc)
 
 bool searchItem(List list, DATA key)
 {
-    int left = 0;
-    int right = MAX;
-    int mid;
-    while (left <= right)
-    {
+    int left=0;
+    int right=MAX;
+    int mid=left + (right - left) / 2;
+    while (left <= right && list.elems[mid] != key) {
         mid = left + (right - left) / 2;
-        while (left <= right && list.elems[left] == -1)
-        {
+        while (left <= right && list.elems[left] == -1) {
             left++;
         }
-        while (left <= right && list.elems[right] == -1)
-        {
+        while (left <= right && list.elems[right] == -1) {
             right--;
         }
-        while (list.elems[mid] != key)
-        {
-            if (list.elems[mid] < key)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid - 1;
-            }
+            if (list.elems[mid] < key) {
+            left = mid + 1;  
+        } else {
+            right = mid - 1;  
         }
+
     }
 
     return (list.elems[mid] == key);
