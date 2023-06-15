@@ -14,6 +14,10 @@ typedef struct {
 
 void initList(List *list)
 {
+    for (int i = 0; i < MAX; i++)
+    {
+        list->elems[i] = -1;
+    }
     list->count = 0;
     printf("\nList has been Initialized\n");
 }
@@ -32,6 +36,7 @@ void displayList(List list)
     {
         printf(" index:%d  %d\n", a, list.elems[a]);
     }
+    printf("\n%d\n", list.count);
 }
 
 bool insertFront(List *list, DATA item)
@@ -52,46 +57,55 @@ bool insertFront(List *list, DATA item)
     return state;
 }
 
-bool insertRear(List *list, DATA item){
+bool insertRear(List *list, DATA item)
+{
     bool state = (list->count != MAX);
     if (state)
     {
-        list->elems[list->count]= item;
+        list->elems[list->count] = item;
         list->count++;
         printf("\nElement inserted at the Rear\n");
     }
     return state;
 }
 
+bool insertSorted(List *list, DATA item)
+{
+    bool state = (list->count != MAX);
 
-bool insertSorted(List *list, DATA item){
-    bool state=(list->count != MAX);
+    if (state)
+    {
+        int i = list->count - 1;
+        while (i >= 0 && list->elems[i] > item)
+        {
+            list->elems[i + 1] = list->elems[i];
+            i--;
+        }
 
-    if(state){
-            int i = list->count - 1;
-    while (i >= 0 && list->elems[i] > item) {
-        list->elems[i + 1] = list->elems[i];  
-        i--;
+        list->elems[i + 1] = item;
+        list->count++;
+        printf("\nElement inserted at the In Sorted\n");
     }
-    
-    list->elems[i + 1] = item;  
-    list->count++;  
-        }
     return state;
 }
 
-bool insertAt(List *list, DATA item, int loc){
-    bool state=(list->count != MAX && loc >=0 && loc <= list->count);
-    if(state){
-        if(list->elems[loc]==NULL){
-            
+bool insertAt(List *list, DATA item, int loc)
+{
+    bool state = (list->count != MAX && loc >= 0 && loc <= (MAX - 1));
+    if (state)
+    {
+        if (list->elems[loc] == -1)
+        {
+            list->elems[loc] = item;
+            list->count++;
+            printf("\nElement inserted at the At Location\n");
         }
-     }
+    }
     return state;
 }
 
-bool searchItem(List list, DATA key){
-    
+bool searchItem(List list, DATA key)
+{
 }
 
 int getItem(List list, DATA key);
