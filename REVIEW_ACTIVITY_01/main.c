@@ -22,16 +22,35 @@ int main(int argc, char *argv[])
 	List list1;
 	initList(&list1);
 	insertFront(&list1, 10);
-	insertRear(&list1,80);
-	insertAt(&list1,40,4);
+	insertRear(&list1,90);
+	insertAt(&list1,80,7);
+	insertSorted(&list1,70);
 	insertSorted(&list1,40);
+	insertSorted(&list1,50);
+	insertSorted(&list1,60);
+	insertSorted(&list1,30);
+	insertSorted(&list1,20);
+	insertSorted(&list1,10);
 	displayList(list1);
-
 	if(searchItem(list1,30)){
-		printf("Item found");
+		printf("\nItem found\n");
 	}
 	else{
-		printf("Item not in list");
+		printf("\nItem not in list\n");
 	}
+	
+	int retval = getItem(list1, 30);
+	if(retval== -1){
+		printf("\nElement Not Found\n");
+	}else{
+		printf("\n ELement found: %d",retval);
+	}
+
+	/*
+	 deleteFront(&list1);
+	 deleteRear(&list1);
+	 deleteAt(&list1, int loc);
+	 deleteItem(&list1, DATA key);
+	 deleteAllItem(&list1, DATA key);*/
 	return 0;
 }

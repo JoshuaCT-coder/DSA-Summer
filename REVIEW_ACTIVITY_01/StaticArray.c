@@ -77,21 +77,32 @@ bool insertSorted(List *list, DATA item)
     if (state)
     {
 
-        int i = 0;
+        int i;
+        for (i = 0; i < MAX && list->elems[i] != -1 && list->elems[i] <= item; i++)
+        {}
 
-        while (i < list->count && list->elems[i] != -1 && list->elems[i] <= item)
+        if (list->elems[i] == -1)
         {
-            i++;
+            list->elems[i] = item;
         }
 
-        for (int j = list->count - 1; j >= i; j--)
+
+        else
         {
-            list->elems[j + 1] = list->elems[j];
+            for (int a = MAX - 1; a > i; a--)
+            {
+               if (a != i && list->elems[a - 1] != -1) {
+                list->elems[a] = list->elems[a - 1];
+                }
+            }
+            list->elems[i] = item;
         }
 
         list->elems[i] = item;
         list->count++;
+        printf("\nElement inserted at Sorted Position\n");
     }
+
     return state;
 }
 
@@ -112,31 +123,69 @@ bool insertAt(List *list, DATA item, int loc)
 
 bool searchItem(List list, DATA key)
 {
-    int left=0;
-    int right=MAX;
-    int mid=left + (right - left) / 2;
-    while (left <= right && list.elems[mid] != key) {
+    int left = 0;
+    int right = MAX;
+    int mid = left + (right - left) / 2;
+    while (left <= right && list.elems[mid] != key)
+    {
         mid = left + (right - left) / 2;
-        while (left <= right && list.elems[left] == -1) {
+        while (left <= right && list.elems[left] == -1)
+        {
             left++;
         }
-        while (left <= right && list.elems[right] == -1) {
+        while (left <= right && list.elems[right] == -1)
+        {
             right--;
         }
-            if (list.elems[mid] < key) {
-            left = mid + 1;  
-        } else {
-            right = mid - 1;  
+        if (list.elems[mid] < key)
+        {
+            left = mid + 1;
         }
-
+        else
+        {
+            right = mid - 1;
+        }
     }
 
     return (list.elems[mid] == key);
 }
 
-int getItem(List list, DATA key);
+int getItem(List list, DATA key){
+{
+    
+    int left = 0;
+    int right = MAX;
+    int mid = left + (right - left) / 2;
+    while (left <= right && list.elems[mid] != key)
+    {
+        mid = left + (right - left) / 2;
+        while (left <= right && list.elems[left] == -1)
+        {
+            left++;
+        }
+        while (left <= right && list.elems[right] == -1)
+        {
+            right--;
+        }
+        if (list.elems[mid] < key)
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid - 1;
+        }
+    }
+    
 
-bool deleteFront(List *list);
+    return (list.elems[mid] == key)?list.elems[mid]: -1;
+}
+}
+
+bool deleteFront(List *list)
+{
+
+}
 
 bool deleteRear(List *list);
 
