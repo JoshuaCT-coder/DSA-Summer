@@ -8,7 +8,7 @@
 typedef int DATA;
 
 typedef struct {
-	DATA elems[MAX];
+	DATA *elems;	//changed this datatype so that I can realloc, if it isnt a pointer I cant realloc, I would have to realloc the entire List and manually tranfser from two different lists plus calloc can initialize empty nodes into 0 so its convenient;
 	int count;
 	int max;
 } List;
