@@ -39,18 +39,31 @@ int main(int argc, char *argv[])
 		printf("\nItem not in list\n");
 	}
 	
-	int retval = getItem(list1, 30);
+	int retval = getItem(list1, 100);
 	if(retval== -1){
 		printf("\nElement Not Found\n");
 	}else{
 		printf("\n ELement found: %d",retval);
 	}
 
-	/*
 	 deleteFront(&list1);
 	 deleteRear(&list1);
-	 deleteAt(&list1, int loc);
-	 deleteItem(&list1, DATA key);
-	 deleteAllItem(&list1, DATA key);*/
+	 
+	 
+int del1 = deleteAt(&list1, 7);
+	 if(del1==-1){
+		printf("\nNo element in that Location\n");
+	 }else{
+		printf("\n Element deleted is %d",del1);
+	 }
+
+	deleteItem(&list1, 50);
+	int delAll =  deleteAllItem(&list1, 10);
+if(delAll!=0){
+	printf("\n %d element/s of 10 are deleted\n",delAll);
+}else{
+	printf("\nNo elements Deleted\n");
+}
+displayList(list1);
 	return 0;
 }
