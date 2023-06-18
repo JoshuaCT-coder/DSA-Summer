@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include "StaticArray.c"
-#include "DynamicArray.c"
-/*-- -- -- -- -- -- -- -- -- -- -- -- -- -STATIC ARRAY TESTING-- -- -- -- -- -- -- -- -- -- -- -- -
+// #include "StaticArray.c	// for Static array we assume -1 is uninitialized values so that it wont be garbage
+#include "DynamicArray.c"   //for Dynaimc array we assume 0 is uninitialized values so that it wont be garbage
+
+
+//my functions are inefficient and O(2) because I am assuming there are gaps in the list
+
+
+
+/* -- -- -- -- -- -- -- -- -- -- -- -- -STATIC ARRAY TESTING-- -- -- -- -- -- -- -- -- -- -- -- -
 int main(int argc, char *argv[])
 {
 	List list1;
@@ -33,7 +39,7 @@ int main(int argc, char *argv[])
 		printf("\n ELement found: %d", retval);
 	}
 
-	deleteFront(&list1);
+	//deleteFront(&list1);
 	deleteRear(&list1);
 
 	int del1 = deleteAt(&list1, 7);
@@ -54,21 +60,31 @@ int main(int argc, char *argv[])
 	displayList(list1);
 
 	return 0;
-}
-*/
+}*/
+
 //--------------------------------Dynamic Array TESTING--------------------------------
 int main()
 {
 	List list2;
-	initList(&list2);
-	list2.elems[0]=1;
-	list2.elems[2]=1;
-	list2.elems[3]=1;
+    initList(&list2);
+    list2.elems[0]=1;
+    list2.elems[1]=20;
+    list2.elems[2]=30;
+    list2.elems[3]=40;
+    list2.elems[4]=50;
+    list2.elems[5]=60;
+    list2.elems[6]=70;
+    list2.elems[7]=80;
+    list2.elems[8]=90;
+    list2.elems[9]=100;
+
+    list2.count=10;
+    displayList(list2);
+    insertFront(&list2, 10);
+   	insertRear(&list2, 10);
+	insertSorted(&list2, 80);
 	displayList(list2);
-	insertFront(&list2, 10);
-	// insertRear(list2, 10);		
-	// insertSorted(list2, 20);
-	// insertAt(list2, 30, 4);
+	insertAt(&list2,30, 4);
 
 	// searchItem(*list2, 10);
 	// getItem(*list2, 20);

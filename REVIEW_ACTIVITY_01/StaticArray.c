@@ -63,7 +63,9 @@ bool insertRear(List *list, DATA item)
     bool state = (list->count != MAX);
     if (state)
     {
-        list->elems[list->count] = item;
+        int idx;
+        for( idx=0;idx<MAX && list->elems[idx]!=-1; idx++){}
+        list->elems[idx] = item;
         list->count++;
         printf("\nElement inserted at the Rear\n");
     }
@@ -79,8 +81,7 @@ bool insertSorted(List *list, DATA item)
 
         int i;
         for (i = 0; i < MAX && list->elems[i] != -1 && list->elems[i] <= item; i++) // Checks if the item to be added is greater than the values in the list, if -1 it stops and adds the value
-        {
-        }
+        {}
 
         if (list->elems[i] == -1)
         {
