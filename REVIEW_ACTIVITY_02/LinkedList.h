@@ -10,9 +10,14 @@ typedef struct node {
 	struct node *next;
 } NodeType, *NodePtr, *List;
 
+// typedef struct node{
+// 	NodePtr cells;							//Could be used if you want to count for the elements in the list
+// 	int count;
+// }*List;
+
 void initList(List *list);
 List newList();
-NodeType createNode(DATA data);
+NodePtr createNode(DATA data);
 void displayList(List list);
 bool insertFront(List *list, DATA item);
 bool insertRear(List *list, DATA item);
