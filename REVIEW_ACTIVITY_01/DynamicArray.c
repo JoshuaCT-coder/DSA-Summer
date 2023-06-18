@@ -131,12 +131,12 @@ bool insertAt(List *list, DATA item, int loc){
             resizeArray(list,list->max);
         }
         int high;
-        for(high=list->max-1;list->elems[high];high--){}
+        for(high=list->max-1;list->elems[high]==0;high--){}
         while(high>=loc){
             list->elems[high+1]=list->elems[high];
             high--;
         }
-        list->elems[loc];
+        list->elems[loc]=item;
     }
     list->count++;
     printf("\nElement inserted at Location\n");
@@ -197,15 +197,114 @@ bool deleteFront(List *list){
 			if(list->count<list->max/2){
                 resizeArray(list,list->max);
             }
-		}
+		}else{
+            printf("\nList is Empty, No Element to Delete\n");
+        }
 	}
 
 bool deleteRear(List *list){
+    bool state = (list->count !=0);
+
+    if (state){
+        int idx;
+        for(idx=list->max-1;idx>=0 && list->elems[idx]==0;idx--){}
+        list->elems[idx]= 0;
+        list->count--;
+        if(list->count<list->max/2){
+            resizeArray(list,list->max);
+        }
+        printf("\nElement at the Rear has bee deleted\n");
+
+    }else{
+        printf("\nList is Empty, No Element to Delete\n");
+    }
 
 }
 
-int deleteAt(List *list, int loc);
+int deleteAt(List *list, int loc){
+        bool state = (list->count!=0);
+        int temp = list->elems[loc];
+    if (state){
 
-bool deleteItem(List *list, DATA key);
+        list->elems[loc]= 0;
+        int idx;
+        for(idx=loc;idx<=list->max-2 && list->elems[idx+1]!=0;idx++){
+            list->elems[idx]=list->elems[idx+1];
+        }
+        list->elems[idx]=0;
+        list->count--;
+        if(list->count<list->max/2){
+            resizeArray(list,list->max);
+        }
+        printf("\nElement %d has been deleted at index[%d]\n",temp,loc);
 
-int deleteAllItem(List *list, DATA key);
+    }else{
+        printf("\nList is Empty, No Element to Delete\n");
+    }
+    return temp;
+}
+
+
+bool deleteItem(List *list, DATA key){
+        bool state = (list->count !=0);
+
+    if (state){
+        int idx;
+        int a;
+        for(idx=list->max-1;idx>=0 && list->elems[idx]==0;idx--){}
+        for(a=0; a<=idx && list->elems[a]!=key;a++){}
+        if(list->elems[a]==key){
+            printf("\nElement %d has been deleted in index[%d]\n",key,a);
+            while(a<idx){
+                list->elems[a]=list->elems[a+1];
+                a++;
+            }
+        
+          list->elems[idx]= 0;
+         list->count--;
+        }
+        if(list->count<list->max/2){
+             resizeArray(list,list->max);
+        }
+    }else{
+        printf("\nList is Empty, No Element to Delete\n");
+    }
+
+}
+
+
+
+int deleteAllItem(List *list, DATA key){
+    bool state = (list->count !=0);
+    int ctr=0;
+    if (state){
+        int idx;
+        int a;
+        
+        for(idx=list->max-1;idx>=0 && list->elems[idx]==0;idx--){}
+        for(a=0; a<=idx;a++){
+            if(list->elems[a]==key){
+             int pos=a;
+              while(pos<idx){
+                list->elems[pos]=list->elems[pos+1];
+                pos++;
+              }
+            a--;
+            list->elems[idx]= 0;
+            list->count--;
+            ctr++;
+            }
+        }
+        
+        if(list->count<list->max/2){
+            resizeArray(list,list->max);
+        }
+        printf("\nElement at the Rear has bee deleted\n");
+
+    }else{
+        printf("\nList is Empty, No Element to Delete\n");
+    }
+return ctr;
+}
+
+

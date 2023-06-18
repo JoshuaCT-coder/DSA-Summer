@@ -79,8 +79,8 @@ int main()
     list2.elems[9]=100;
 
     list2.count=10;
-    insertFront(&list2, 10);
-   	insertRear(&list2, 10);
+   insertFront(&list2, 10);
+   insertRear(&list2, 10);
 	insertSorted(&list2, 80);
 	insertAt(&list2,30, 4);
 	displayList(list2);
@@ -100,13 +100,11 @@ int main()
 	}
 	deleteFront(&list2);
 	deleteRear(&list2);
+	deleteAt(&list2, 4);
+	deleteItem(&list2, 30);
+	int delAll=deleteAllItem(&list2, 80);
+	printf("\n %d Element/s of 80 have been deleted\n",delAll);
 	displayList(list2);
-	// deleteAt(list2, 3);
-	// deleteItem(list2, 20);
-	// deleteAllItem(list2, 10);
 	free(list2.elems);
 	return 0;
 }
-// int deleteAt(List *list, int loc);
-// bool deleteItem(List *list, DATA key);
-// int deleteAllItem(List *list, DATA key);
