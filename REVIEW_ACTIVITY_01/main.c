@@ -79,45 +79,34 @@ int main()
     list2.elems[9]=100;
 
     list2.count=10;
-    displayList(list2);
     insertFront(&list2, 10);
    	insertRear(&list2, 10);
 	insertSorted(&list2, 80);
-	displayList(list2);
 	insertAt(&list2,30, 4);
+	displayList(list2);
+	bool srch = searchItem(list2, 20);
+	if(srch){
+		printf("\n Element is Found\n");
+	}else{
+		printf("\nElement is not Found\n");
+	}
 
-	// searchItem(*list2, 10);
-	// getItem(*list2, 20);
-	// deleteFront(list2);
-	// deleteRear(list2);
+	
+	int retval = getItem(list2, 20);
+	if(retval==0){
+		printf("\n Element is not in the List\n");
+	}else{
+		printf("\nElement 20 is found in index %d\n", retval);
+	}
+	deleteFront(&list2);
+	deleteRear(&list2);
+	displayList(list2);
 	// deleteAt(list2, 3);
 	// deleteItem(list2, 20);
 	// deleteAllItem(list2, 10);
 	free(list2.elems);
 	return 0;
 }
-
-
-// #define MAX 10
-// typedef int DATA;
-
-// typedef struct {
-// 	DATA elems[MAX];
-// 	int count;
-// 	int max;
-// } List;
-
-// void initList(List *list);
-// List newList(int max);
-// void displayList(List list);
-// bool insertFront(List *list, DATA item);
-// bool insertRear(List *list, DATA item);
-// bool insertSorted(List *list, DATA item);
-// bool insertAt(List *list, DATA item, int loc);
-// bool searchItem(List list, DATA key);
-// int getItem(List list, DATA key);
-// bool deleteFront(List *list);
-// bool deleteRear(List *list);
 // int deleteAt(List *list, int loc);
 // bool deleteItem(List *list, DATA key);
 // int deleteAllItem(List *list, DATA key);

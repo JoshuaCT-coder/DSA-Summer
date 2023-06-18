@@ -65,8 +65,7 @@ bool insertFront(List *list, DATA item)
         }
         list->elems[0] = item;
 
-        list->count++;
-        printf("\nElement inserted at the Front\n");
+        
     }else{
         resizeArray(list, list->max);
     
@@ -76,9 +75,10 @@ bool insertFront(List *list, DATA item)
     }
 
     list->elems[0] = item;
-    list->count++;
+  
     } 
-
+    list->count++;
+    printf("\nElement inserted at the Front\n");
     return state;
 }
 
@@ -96,6 +96,7 @@ bool insertRear(List *list, DATA item){
         list->elems[idx]=item;
         list->count++;
     }
+    printf("\nElement inserted at Rear\n");
     return state;
 }
 
@@ -124,22 +125,80 @@ bool insertSorted(List *list, DATA item){
 bool insertAt(List *list, DATA item, int loc){
     bool state =(list->elems[loc]==0);
     if(state){
-        
+        list->elems[loc]=item;
+    }else{
+        if(list->count== list->max){
+            resizeArray(list,list->max);
+        }
+        int high;
+        for(high=list->max-1;list->elems[high];high--){}
+        while(high>=loc){
+            list->elems[high+1]=list->elems[high];
+            high--;
+        }
+        list->elems[loc];
     }
+    list->count++;
+    printf("\nElement inserted at Location\n");
     return state;
 }
 
 bool searchItem(List list, DATA key){
+     int low =0;
+     int high=list.max-1;
+     int mid = low + (high-low)/2;
+    
+    while(low<=high && list.elems[high]==0){
+        high--;
+    }
+    while(low<=high && list.elems[mid]!=key){
+         mid = low + (high-low)/2;
 
+        if(list.elems[mid]<key){
+            low=mid+1;
+        }else{
+            high=mid-1;
+        }
+    }
+    return(list.elems[mid]==key);
 }
 
 int getItem(List list, DATA key){
+     int low =0;
+     int high=list.max-1;
+     int mid = low + (high-low)/2;
+    
+    while(low<=high && list.elems[high]==0){
+        high--;
+    }
+    while(low<=high && list.elems[mid]!=key){
+         mid = low + (high-low)/2;
 
+        if(list.elems[mid]<key){
+            low=mid+1;
+        }else{
+            high=mid-1;
+        }
+    }
+    return(list.elems[mid]==key)? mid: 0;
 }
 
 bool deleteFront(List *list){
+		bool state = (list->count!=0);
 
-}
+		if(state){
+			int idx;
+			for(idx=0; idx<list->max && list->elems[idx+1]!=0; idx++){
+				list->elems[idx]=list->elems[idx+1];
+			}
+            list->elems[idx]=0;
+            printf("\nFront Element has been deleted\n");
+            list->count--;
+			if(list->count<list->max/2){
+                resizeArray(list,list->max);
+            }
+		}
+	}
 
 bool deleteRear(List *list){
 
