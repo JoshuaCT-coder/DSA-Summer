@@ -27,6 +27,7 @@ NodePtr createNode(DATA data){
 void displayList(List list){
     List trav;
     int ctr=0;
+    printf("\n---------CURRENT LIST----------\n");
     for(trav = list; trav != NULL; trav = trav->next){
         printf("\nElement %d\n",trav->data);
         ctr++;
@@ -121,7 +122,22 @@ bool deleteRear(List *list){
       printf("\n Rear Elem is Deleted\n");
 }
 
-int deleteAt(List *list, int loc);
+int deleteAt(List *list, int loc){
+    int ctr=1;
+    List *trav;
+    for(trav=list;(*trav)!=NULL && ctr < loc; trav=&(*trav)->next){
+        ctr++;
+    }
+    if(ctr>=loc && (*trav)==NULL){
+        printf("\nOut of Bounds\n");
+    }else{
+        List temp;
+        temp = (*trav);
+        (*trav) =(*trav)->next;
+        free(temp); 
+
+        printf("\nElement %d has been deleted at the %d Location\n",(*trav)->data,loc);    }
+}
 
 bool deleteItem(List *list, DATA key);
 

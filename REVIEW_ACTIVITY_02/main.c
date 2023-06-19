@@ -25,11 +25,11 @@ if(retval==-1){
 }
 deleteFront(&list);
 deleteRear(&list);
+deleteAt(&list,3);
 displayList(list);
 
 	return 0;
 } 
-// int deleteAt(&list,3);
 // 	   deleteItem(&list, 50);
 // int deleteAllItem(&list, 50);
 
