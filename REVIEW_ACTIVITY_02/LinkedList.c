@@ -134,11 +134,43 @@ int deleteAt(List *list, int loc){
         List temp;
         temp = (*trav);
         (*trav) =(*trav)->next;
+        printf("\nElement %d has been deleted at the %d Location\n",temp->data,loc);   
         free(temp); 
-
-        printf("\nElement %d has been deleted at the %d Location\n",(*trav)->data,loc);    }
+         }
 }
 
-bool deleteItem(List *list, DATA key);
+bool deleteItem(List *list, DATA key){
+    List *trav;
+     for(trav=list; (*trav)!= NULL && (*trav)->data != key; trav=&(*trav)->next){}
 
-int deleteAllItem(List *list, DATA key);
+     if((*trav)!=NULL){
+        List temp;
+        temp = (*trav);
+        (*trav) =(*trav)->next;
+        free(temp); 
+
+        printf("\nElement %d has been deleted\n",key);    
+     }else{
+        printf("\nNo element Found\n");
+     }
+}
+
+int deleteAllItem(List *list, DATA key){
+    List *trav;
+    int ctr=0;
+     for(trav=list; (*trav)!= NULL; trav=&(*trav)->next){
+         while((*trav)->data == key && (*trav)!=NULL){
+        List temp;
+        temp = (*trav);
+        (*trav) =(*trav)->next;
+        free(temp); 
+        printf("\nElement %d has been deleted\n",key);    
+        ctr++;
+     }   
+     }
+     if(ctr==0){
+    printf("\nNo element of %d Found\n",key);
+     }
+     return ctr;
+}
+
