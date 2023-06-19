@@ -76,15 +76,50 @@ bool insertAt(List *list, DATA item, int loc){
      return(temp!=NULL);
 }
 
-bool insertSorted(List *list, DATA data);
+bool insertSorted(List *list, DATA data){
+    List temp = createNode(data);
+    List *trav;
 
-bool searchItem(List list, DATA key);
+    for(trav=list; (*trav)!= NULL && (*trav)->data < data; trav=&(*trav)->next){}
+    temp->next = *trav;
+    *trav= temp;
+    printf("\nElement Successfully inserted at the at the Sorted location");
+    return (temp!=NULL);
+}
 
-int getItem(List list, DATA key);
+bool searchItem(List list, DATA key){
+    List trav;
+    for(trav=list; trav!= NULL && trav->data != key; trav=trav->next){}
+    if(trav==NULL){
+        printf("\nElement %d not Found\n",key);
+    }else{
+        printf("\nElement %d is found\n",key);
+    }
+}
 
-bool deleteFront(List *list);
+int getItem(List list, DATA key){
+ List trav;
+    for(trav=list; trav!= NULL && trav->data != key; trav=trav->next){}
+    return (trav==NULL)?-1: trav->data;
+}
 
-bool deleteRear(List *list);
+bool deleteFront(List *list){
+    List temp;
+    temp=*list;
+    *list=(*list)->next;
+    free(temp);
+    printf("\nFront Elem is Deleted\n");
+}
+
+bool deleteRear(List *list){
+    List *trav;
+      for(trav=list; (*trav)->next!=NULL; trav=&(*trav)->next){}
+      List temp;
+      temp=*trav;
+      (*trav)=NULL;
+      free(temp);
+      printf("\n Rear Elem is Deleted\n");
+}
 
 int deleteAt(List *list, int loc);
 
