@@ -10,7 +10,9 @@ int main(){
 	addEmployee(&emplist, newEmployee(1011,"Maria Posada","Female",40.0));
 	addEmployee(&emplist, newEmployee(1012,"Derrick Posada","Male",50.0));
 	addEmployee(&emplist, newEmployee(1013,"Juan Posada","Male",60.0));
-	addEmployee(&emplist, newEmployee(1014,"Maria Posada","Female",40.0));
+	addEmployee(&emplist, newEmployee(1014,"Jerome Posada","Female",40.0));
 	displayEmployeeList(emplist);
+	List femEmp = getFemaleEmployee(&emplist);
+	displayEmployeeList(femEmp);
 	return 0;
 }

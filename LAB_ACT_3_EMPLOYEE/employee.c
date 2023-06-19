@@ -17,7 +17,7 @@ HourlyEmployee newEmployee(int id, String name,String gender, float hours){
 void displayEmployee(HourlyEmployee he){
 	printf("\nID: %d\n",he.idNumber);
 	printf("\nNAME: %s\n",he.name);
-	printf("\nGENDER: %c\n",he.gender);
+	printf("\nGENDER: %s\n",he.gender);
 	printf("\nHOURS WORKED: %.2f\n",he.totalHrsWrkd);
 }
 
@@ -47,8 +47,15 @@ void displayEmployeeList(List list){
 	}
 }
 List getFemaleEmployee(List *list){
-	List femEmp;
-	
+    List femEmp;
+    initList(&femEmp);
+    int i;
+    for(i=0; i<list->max; i++){
+       if (strcmp(list->employee[i].gender, "Female") == 0) {
+            addEmployee(&femEmp, list->employee[i]);
+        }
+    }
+    return femEmp;
 }
 
 
