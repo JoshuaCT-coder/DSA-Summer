@@ -142,7 +142,6 @@ int deleteAt(List *list, int loc){
 bool deleteItem(List *list, DATA key){
     List *trav;
      for(trav=list; (*trav)!= NULL && (*trav)->data != key; trav=&(*trav)->next){}
-
      if((*trav)!=NULL){
         List temp;
         temp = (*trav);
@@ -158,14 +157,16 @@ bool deleteItem(List *list, DATA key){
 int deleteAllItem(List *list, DATA key){
     List *trav;
     int ctr=0;
-     for(trav=list; (*trav)!= NULL; trav=&(*trav)->next){
-         while((*trav)->data == key && (*trav)!=NULL){
+     for(trav=list; (*trav)!= NULL;){
+         if((*trav)->data == key){
         List temp;
         temp = (*trav);
         (*trav) =(*trav)->next;
         free(temp); 
         printf("\nElement %d has been deleted\n",key);    
         ctr++;
+     }else{
+        trav=&(*trav)->next;
      }   
      }
      if(ctr==0){

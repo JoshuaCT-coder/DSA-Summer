@@ -29,8 +29,8 @@ deleteFront(&list);
 deleteRear(&list);
 deleteAt(&list,3);
 deleteItem(&list, 20);
-//int delAll =  deleteAllItem(&list, 40);
-//printf("\n%d Elements of 40 have been deleted\n",delAll);
+int delAll =  deleteAllItem(&list, 40);
+printf("\n%d Elements of 40 have been deleted\n",delAll);
 
 displayList(list);
 
