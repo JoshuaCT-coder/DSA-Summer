@@ -40,7 +40,7 @@ void addEmployee(List *list, HourlyEmployee emp){
 }
 void displayEmployeeList(List list){
 	int i;
-	printf("\n\t-------EMPLOYEE LIST----------\n");
+	printf("\n\t-------EMPLOYEE LIST--------\n");
 	printf("\n%10s | %15s | %10s\n","ID","NAME","GENDER");
 	for(i=0; i< list.count;i++){
 		printf("\n%10d | %15s | %10s\n",list.employee[i].idNumber,list.employee[i].name,list.employee[i].gender);
@@ -57,6 +57,5 @@ List getFemaleEmployee(List *list){
     }
     return femEmp;
 }
-
 
 
