@@ -54,14 +54,11 @@
 	return 0;
 }*/
 
-
-
 int main(int argc, char *argv[]) {
 	
-	StackPTR list;
-	initStack(list);
+	Stack list;
+	initStack(&list);
 	int choice;
-	int TOP;
 	int item;
 	
 	do{
@@ -87,7 +84,7 @@ int main(int argc, char *argv[]) {
 		
 			break;
 		case 3:
-			TOP = top(list);
+			int TOP = top(list);
 			printf("\nElement AT The Top is %d\n",TOP);
 			break;
 		

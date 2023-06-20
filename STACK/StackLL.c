@@ -4,7 +4,8 @@
 #include "StackLL.h"
 
 void initStack(Stack *list){
-	list->top->next=NULL;
+	list->top=NULL;
+	list->count=0;
 }
 
 bool isEmpty(Stack list){
@@ -17,20 +18,25 @@ void push(Stack *list,int item){
 	if(isFull(*list)){
 		printf("\nLIST IS FULL UNABLE TO PUSH\n");
 	}else{
-		DATA *NewElem = malloc(sizeof(DATA)); 
-		list->top= NewElem;
-		list->count
+		DataPTR temp = malloc(sizeof(DATA)); 
+		temp->next=list->top;
+		temp->num=item;
+		list->top=temp;
+		list->count++;
 	}
 }
 void pop(Stack *list){
 	if(isEmpty(*list)){
 		printf("\nList is Empty\n");
 	}else{
+		DataPTR temp = list->top;
+		list->top=temp->next;
+		free(temp);
 		list->count--;
 	}
 }
 int top(Stack list){
-	return list.data[list.count-1];
+	return list.top->num;
 }
 void display(Stack list){
 	Stack temp;
@@ -46,10 +52,10 @@ void display(Stack list){
 	}
 }
 void visualize(Stack list){
-	printf("\n\tBOTTOM\n");
-	int i;
-	for(i=0; i< MAX;i++){
-		printf("\n%d\n",list.data[i]);
+	printf("\n\t FROM TOP\n");
+	DataPTR trav;
+	for(trav=list.top; trav!=NULL; trav=trav->next){
+		printf("\n%d\n",trav->num);
 	}
 }
 
