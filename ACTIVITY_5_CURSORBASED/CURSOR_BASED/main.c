@@ -17,7 +17,7 @@ insertfront(&VH,&mylist,newStudent(101,"Gwen Stacy", 'F',"BS in Swinging"));
 visualizeSpace(VH);
 display(VH,mylist);
 removeStudent(&VH,&mylist,"Raya The Dragon");
-visualizeSpace(VH);
+
 display(VH,mylist);
 
 	return 0;

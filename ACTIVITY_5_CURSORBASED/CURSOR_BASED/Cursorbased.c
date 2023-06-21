@@ -92,8 +92,17 @@ void display(VirtualHeap vh, List list){
  	retval = vh->elems[*trav].elem;
  	temp=*trav;
  	*trav=vh->elems[*trav].next;
- 	deallocSpace(vh,temp);
+ 	deallocSpace(vh,temp);								  
+	printf("\n----------------DELETED ELEMENT--------------\n");
+	if(retval.studName==0){
+ 			printf("%30s |","EMPTY");
+		 }else{
+		 	printf("%4d - %-23s |",retval.studID,retval.studName);
+		 }
+		 printf("%d\n\n\n",vh->elems[temp].next);
  	return retval;
+
+
  }
    
  
