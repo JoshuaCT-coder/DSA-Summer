@@ -87,13 +87,13 @@ void display(VirtualHeap vh, List list){
  }
  Student removeStudent(VirtualHeap *vh,List *list,String key){
  	Student retval;
- 	List *trav;
+ 	List *trav,temp;
  	for(trav=list;strcmp(vh->elems[*trav].elem.studName,key)!=0 && *trav!=-1;trav=&vh->elems[*trav].next){}
  	retval = vh->elems[*trav].elem;
+ 	temp=*trav;
  	*trav=vh->elems[*trav].next;
- 	deallocSpace(vh,*trav);
+ 	deallocSpace(vh,temp);
  	return retval;
  }
    
  
-
