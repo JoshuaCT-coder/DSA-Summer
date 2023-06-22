@@ -63,17 +63,84 @@ void display(Queue q){
 		dequeue(&q);
 	}
 }
-
+//-------------------------MANUAL SHIFTING-------------------//
 bool removeItem(Queue *q,int item){							 //first occurence
-	int trav,tempf;
-	for(trav=q->front;trav!=(q->rear+1)% MAX && q->elems[trav]!= item;trav=(trav+1)%MAX){}
-		if(trav!=(q->rear+1)%MAX){
-	}else{
-		printf("\nNo element Found!\n");
-	}	
+	int tempf,count=MAX-1;
 	
+	while(q->elems[q->front]!=item && count!=0){
+			tempf=front(*q);
+			dequeue(q);
+			enqueue(q, tempf);
+			count--;
+	}
+		if(count==0){
+			printf("\nElement not Found\n");
+		}else{
+			dequeue(q);
+			printf("\nElement Found\n");
+		}
 }
-Queue removeEven(Queue *q);   	// removes all even and return all deleted item stored in Q;
-int doubletheValue(Queue *q);		//deletes the value in queue that is a multiple of the given value and return how many value have been changed
+
+//-------------------------TEMPORARY QUEUE-------------------//
+/*bool removeItem(Queue *q, int item) {						 //first occurence
+	int frontIndex = q->front;
+	int rearIndex = q->rear;
+	bool found = false;
+
+	Queue tempQueue;
+	initQueue(&tempQueue);
+
+	while (frontIndex != EMPTY && !found) {
+		if (q->elems[frontIndex] == item) {
+			found = true;
+			dequeue(q);  // Remove the item from the main queue
+		} else {
+			enqueue(&tempQueue, q->elems[frontIndex]);  // Enqueue the element into the temporary queue
+			dequeue(q);  // Remove the element from the main queue
+		}
+
+		frontIndex = (frontIndex + 1) % MAX;  // Move to the next element in the main queue
+	}
+
+	// Restore the elements back to the main queue
+	while (!isEmpty(tempQueue)) {
+		enqueue(q, front(tempQueue));
+		dequeue(&tempQueue);
+	}
+
+	return found;
+}*/
+
+Queue removeEven(Queue *q){
+	Queue EvenQueue;
+	initQueue(&EvenQueue);							// removes all even and return all deleted item stored in Q;
+	int OrgRear;
+	OrgRear= q->rear;
+
+	while(q->front!=(OrgRear+1)%MAX){
+		if(front(*q)%2==0){
+			enqueue(&EvenQueue,front(*q));
+			dequeue(q);
+		}else{
+			enqueue(q,front(*q));
+			dequeue(q);
+		}
+	}
+	return EvenQueue;
+}  									
+int doubletheValue(Queue *q,int item){						/*doubles the value in queue that is a multiple of the given value 
+													and return how many value have been changed*/										
+	int trav,ctr=0;
+	trav= q->front;
+
+	while(trav!=(q->rear+1)%MAX){
+		if(q->elems[trav]%item==0){
+			q->elems[trav]= q->elems[trav]*2;
+			ctr++;
+		}
+		trav=(trav+1)%MAX;
+	}			
+	return ctr;								
+}
 
 

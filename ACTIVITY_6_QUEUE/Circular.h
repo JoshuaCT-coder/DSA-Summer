@@ -25,5 +25,5 @@ void display(Queue q);
 
 bool removeItem(Queue *q,int item); //first occurence
 Queue removeEven(Queue *q);   	// removes all even and return all deleted item stored in Q;
-int doubletheValue(Queue *q); 		//deletes the value in queue that is a multiple of the given value and return how many value have been changed
+int doubletheValue(Queue *q, int item); 		//deletes the value in queue that is a multiple of the given value and return how many value have been changed
 #endif
