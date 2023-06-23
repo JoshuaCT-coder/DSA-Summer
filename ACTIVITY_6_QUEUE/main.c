@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Circular.c"
+#include "Circular.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
