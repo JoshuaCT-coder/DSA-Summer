@@ -5,19 +5,6 @@
 #include "CBStkQ.h"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
-/*typedef struct{
-	int date;
-	int month;
-	int year;
-}Date;
-
-typedef struct{
-	int prodID;
-	String prodName;
-	int prodQty;
-	double prodPrice;
-	Date prodExp;
-}Product;*/
 
 int main(int argc, char *argv[]){
 	String Menu[4]={"Stack","Queue","Visualize","Exit"};
