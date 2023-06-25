@@ -5,41 +5,6 @@
 #include "CBStkQ.h"
 
 shortstring Dates[13]={"","Jan","Feb","Mar","Apr","May","June","July","Aug","Oct","Nov","Dec"};
-/*typedef struct{
-	int date;
-	int month;
-	int year;
-}Date;
-
-typedef struct{
-	int prodID;
-	String prodName;
-	int prodQty;
-	double prodPrice;
-	Date prodExp;
-}Product;
-
-typedef struct{
-	Product items;
-	int link;
-}Stype;
-
-typedef struct{
-	Stype data[MAX];
-	int avail;
-}VirtualHeap;
-
-
-typedef int Stacklist;
-
-typedef struct{
-	int front;
-	int rear;
-}Queue;
-
-*/
-
-
 
 //------------------------VIRTUAL_HEAP-----------------//
 void initVH(VirtualHeap *vh){
