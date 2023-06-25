@@ -86,6 +86,9 @@ int main(int argc, char *argv[]) {
 				visualize(myQueue);
 				printf("\n%d Number of Elements Doubled!\n",ctr);
 				break;
+			case 0:
+			break;
+			
 			default:
 				printf("INVALID INPUT\n");
 				break;
