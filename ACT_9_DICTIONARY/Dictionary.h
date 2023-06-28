@@ -4,13 +4,16 @@
 
 typedef char String[20];
 
+typedef char shortstring[5];
+typedef char Fullname[35];
+
 typedef struct{
 	String Fname;
 	String Mname;
 	String Lname;
 }Name;
 
-typedef stuct{
+typedef struct{
 	int date;
 	int month;
 	int year;
@@ -18,31 +21,37 @@ typedef stuct{
 
 typedef struct{
 	String studId;
-	char sex;
 	Name studName;
+	char sex;
 	Birthday bday;
 	String program; 
 	int year;
 }Student;
 
- typedef struct node{
- 	Student elem;
+ 
+typedef struct node{
+ 	Student data;
  	struct node* next;
- }Stype;
+ }Stype,*ElemPtr;
  
 typedef struct{
-	Stype *elems[MAX];
+	ElemPtr *elems;
 	int count;
 	int max;
 }Dictionary;
 
 
-Dictionary createDict();
-void initDict(Dictionary *d,int max);
-void addElem(Dictionary *d,Student item);
-void removeElem(Dicitonary *d, Student item);
-void visualize(Dictionary d);
-int Hash (Student s,int size);
+Student newstudent(String studId,Name studName, Birthday bday, char sex, String program, int year);
+Name newName(String fname, String mname, String lname);
+Birthday newBday(int date, int month, int year);
 
+
+// Dictionary createDict();
+void initDictionary(Dictionary *d,int max);
+int Hash (Student s,int size);
+void addElem(Dictionary *d,Student item);
+void removeElem(Dictionary *d, Student item);
+void visualize(Dictionary d);
+void freeDictionary(Dictionary* dict);
 
 #endif
