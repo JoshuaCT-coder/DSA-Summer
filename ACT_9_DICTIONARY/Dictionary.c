@@ -45,12 +45,18 @@ void initDict(Dictionary *d,int max){
 }
 
 
-void addElem(Dictionary *d,Student item){}
+void addElem(Dictionary *d,Student item){
+	int idx =Hash(item,d->max);
+	Stype *temp= malloc(sizeof(Stype));
+	temp->next=d->elems[idx];
+	temp->data=item;
+	d->elems[idx]=temp;
+}
 void removeElem(Dictionary *d, Student item);
 
 
 int Hash (Student s,int size){
-	return toupper(s.studName.Lname[0])-65;
+	return (toupper(s.studName.Lname[0])-65)%26;
 }
 
 void freeDictionary(Dictionary* dict) {
@@ -65,6 +71,12 @@ void freeDictionary(Dictionary* dict) {
 
 void populate(){
 	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+	newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2);
+
 }
 
 void visualize(Dictionary d){
