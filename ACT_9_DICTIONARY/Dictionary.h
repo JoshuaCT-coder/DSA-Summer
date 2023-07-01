@@ -47,10 +47,11 @@ Birthday newBday(int date, int month, int year);
 
 
 // Dictionary createDict();
-void initDictionary(Dictionary *d,int max);
+void initDict(Dictionary *d,int max);
 int Hash (Student s,int size);
 void addElem(Dictionary *d,Student item);
-void removeElem(Dictionary *d, Student item);
+void populate(Dictionary *d);
+//void removeElem(Dictionary *d, Student item);
 void visualize(Dictionary d);
 void freeDictionary(Dictionary* dict);
 
