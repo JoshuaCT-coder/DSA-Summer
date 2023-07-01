@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 	
 	int size=20;
 	Dictionary d;
-	initDict(&d,38);
+	initDict(&d,26);
 	populate(&d);
 	visualize(d);
 	freeDictionary(&d);
