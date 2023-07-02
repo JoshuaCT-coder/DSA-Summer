@@ -152,9 +152,6 @@ void removeElem(Dictionary *d, Student item){
 								 printf("\nElement not found\n");
 									trav=trav1;
 								}
-
-	
-	printf("\nElement Removed\n\n----------------\n");
 }
 
 int Hash (Student s,int size){
