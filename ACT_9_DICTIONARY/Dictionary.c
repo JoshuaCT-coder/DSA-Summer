@@ -139,7 +139,7 @@ void removeElem(Dictionary *d, Student item){
 													temp=*trav1;
 													*trav=(*trav)->next;
 													free(temp);
-													printf("\nElement found and has been deleted\n");
+													printf("\nElement found and has been deleted\n\n----------------\n");
 												}else{
 													 printf("\nElement not found\n");
 												}
