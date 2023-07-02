@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 			populate(&d);
 				break;
 			case 2:
-			//removeElem();
+			removeElem(&d,newstudent("31100556",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
 				break;
 			case 3: 
 			visualize(d);

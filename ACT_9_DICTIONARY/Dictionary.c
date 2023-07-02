@@ -48,7 +48,6 @@ void initDict(Dictionary *d,int max){
 void addElem(Dictionary *d,Student item){
 	ElemPtr *trav;
 	ElemPtr *trav1;
-	int result;
 	int idx =Hash(item,d->max);
 	ElemPtr temp= malloc(sizeof(Stype));
 
@@ -113,68 +112,50 @@ void addElem(Dictionary *d,Student item){
 	*trav=temp;
 	printf("\nElement Added\n\n----------------\n");
 }
-/*void removeElem(Dictionary *d, Student item){
+void removeElem(Dictionary *d, Student item){
 	ElemPtr *trav;
-	int idx =hash(item,d->max);
-		for(trav = &d->elems[idx]; *trav != NULL && strcmp((*trav)->data.studName.Lname, item.studName.Lname) != 0; trav = &(*trav)->next){}
-			
-			if(*trav=NULL){
+	ElemPtr *trav1;
+	int result;
+	int idx =Hash(item,d->max);
+	ElemPtr temp;
+
+	for(trav = &d->elems[idx]; *trav != NULL && strcmp((*trav)->data.studName.Lname, item.studName.Lname) != 0; trav = &(*trav)->next){}
+
 			printf("\nLast name the same\n");
-			printf("\nFirst name checking\n");
-		    for(;*trav!=NULL && strcmp((*trav)->data.studName.Fname, item.studName.Fname)<0;trav=&(*trav)->next){}
-				if(*trav!=NULL){
-			}else{
-				printf("\n\n not in list");
-			}
-			
-							if(strcmp((*trav1)->data.studName.Fname,item.studName.Fname)==0){
+
+				printf("\nFirst name checking\n");
+				
+				for(trav1=trav;*trav1!=NULL && strcmp((*trav1)->data.studName.Fname, item.studName.Fname)!=0 && strcmp((*trav1)->data.studName.Lname,item.studName.Lname)==0;trav1=&(*trav1)->next){}
+				 printf("\nloop finished\n");
+					if(*trav1!=NULL){
+							
 								printf("\nMiddle name checking\n");
-								for(;*trav1!=NULL && strcmp((*trav1)->data.studName.Mname, item.studName.Mname)<0;trav1=&(*trav1)->next){}
+								for(;*trav1!=NULL && strcmp((*trav1)->data.studName.Mname, item.studName.Mname)!=0 && strcmp((*trav1)->data.studName.Lname,item.studName.Lname)==0 && strcmp((*trav1)->data.studName.Fname,item.studName.Fname)==0;trav1=&(*trav1)->next){}
 									if(*trav1!=NULL){
-										if(strcmp((*trav1)->data.studName.Mname,item.studName.Mname)==0){
 
 											printf("\nID number checking\n");
-											for(;*trav1!=NULL && strcmp((*trav1)->data.studId,item.studId)<0;trav1=&(*trav1)->next){}
+											for(;*trav1!=NULL && strcmp((*trav1)->data.studId,item.studId)!=0 && strcmp((*trav1)->data.studName.Lname,item.studName.Lname)==0 && strcmp((*trav1)->data.studName.Mname,item.studName.Mname)==0 && strcmp((*trav1)->data.studName.Fname,item.studName.Fname)==0;trav1=&(*trav1)->next){}
 												if(*trav1!=NULL){			
-													if(strcmp((*trav1)->data.studId,item.studId)==0){
-													printf("\nThis Person already exists\n");
-													return;
-											
-													}else{
-														// printf("\n %s is larger then %s\n",(*trav1)->data.studId,item.studId);
-														trav=trav1;
-															break;
-													}
+													temp=*trav1;
+													*trav=(*trav)->next;
+													free(temp);
+													printf("\nElement found and has been deleted\n");
 												}else{
-													// printf("\nEnd of the list\n");
-													trav=trav1;
-													break;
+													 printf("\nElement not found\n");
 												}
+										
 										}else{
-											// printf("\n %s is larger then %s\n",(*trav1)->data.studName.Mname,item.studName.Mname);
+											 printf("\nElement not found\n");
 											trav=trav1;
-											break;
-											}
-										}else{
-											// printf("\nEnd of the list\n");
-											trav=trav1;
-											break;
 										}
 								}else{
-								// printf("\n %s is larger then %s\n",(*trav1)->data.studName.Fname,item.studName.Fname);
-								trav=trav1;
-								break;
-								}
-							}else{
-								// printf("\nEnd of the list\n");
+								 printf("\nElement not found\n");
 									trav=trav1;
-									break;
 								}
-					}
-	}
 
+	
+	printf("\nElement Removed\n\n----------------\n");
 }
-*/
 
 int Hash (Student s,int size){
 	return (toupper(s.studName.Lname[0])-65)%26;
@@ -195,11 +176,11 @@ void populate(Dictionary *d){
 	addElem(d,newstudent("21100012",newName("Jarco","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
 	addElem(d,newstudent("21100012",newName("Jimmy","Casera","Rudriguez"),newBday(18,04,2002),'M',"BSCS",2));
 	addElem(d,newstudent("21100012",newName("Jorus","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
-	addElem(d,newstudent("22200124",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
+	addElem(d,newstudent("31100556",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
 	addElem(d,newstudent("22200124",newName("Joshua","Mirio","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
 	addElem(d,newstudent("21100012",newName("Joshua","Casera","Saramo"),newBday(18,04,2002),'M',"BSCS",2));
 	visualize(*d);
-	addElem(d,newstudent("21100012",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
+	addElem(d,newstudent("31100556",newName("Joshua","Casera","Rodriguez"),newBday(18,04,2002),'M',"BSCS",2));
 }
 
 void visualize(Dictionary d){
