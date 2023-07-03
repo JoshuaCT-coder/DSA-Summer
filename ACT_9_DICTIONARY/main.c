@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 			printf("Out of Bounds\n");
 			break;
 		}
-	}while(choice!=4);
+	}while(choice!=4 || choice!=0);
 	freeDictionary(&d);
 	
 		return 0;

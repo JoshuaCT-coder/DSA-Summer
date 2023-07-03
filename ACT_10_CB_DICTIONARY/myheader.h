@@ -5,7 +5,7 @@
 #define EMPTY 0 
 #define DELETED -1
 
-
+typedef char String[20];
 typedef struct{
 	int elem;
 	int link;
@@ -19,13 +19,15 @@ typedef struct{
 }Vspace;
 
 Vspace newVspace(int max);
-int allocSpace(Vspace*vs);
-void freeSpace(Vspace *vs, int loc);
-bool addelem(Vspace* vs);
-bool removeElem(Vspace* vs,int item);
-void visualize(Vspace vs);
-int hash(int val, int size);
+int allocSpace(Vspace *vs);
+int hash(int val,int size);
 bool goodDensity(Vspace vs);
 bool isEmpty(Vspace vs,int loc);
+void freeSpace(Vspace *vs, int loc);
+void visualize(Vspace vs);
+void rehash(Vspace *vs);
+bool addElem(Vspace* vs, int item);
+bool removeElem(Vspace* vs, int item);
+
 
 #endif
