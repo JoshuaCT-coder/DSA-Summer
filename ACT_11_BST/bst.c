@@ -81,9 +81,9 @@ BSTPtr addElem(BST *list, Product item){
 		printf("\nLost in memory\n");
 	}
 		return temp;
-		
-
 	}
+
+
  	if (item.prodID < list->data.prodID) {
  		printf("\nMoving Left\n");
         list->left = addElem(list->left, item);
@@ -130,9 +130,140 @@ void insertBST (BSTPtr *list, Product item){
 		}
 
 //Delete element int BST
-void removeElem(BST **list, int prodID); //iterative
-BST *deleteElement(BST *list,int prodID); //recursive
+void removeElem(BST **list, int prodID) { //Geeks for Geeks implementation
+    BSTPtr curr = *list;
+    BSTPtr parent = NULL;
+ 
+    // Find the node to be deleted
+    while (curr != NULL && curr->data.prodID != prodID) {
+        parent = curr;
+        if (prodID < curr->data.prodID)
+            curr = curr->left;
+        else
+            curr = curr->right;
+    }
+ 
+    // If the node is not found
+    if (curr == NULL)
+        return;
+ 
+    // Case 1: Node to be deleted has no children
+    if (curr->left == NULL && curr->right == NULL) {
+        if (parent == NULL) {
+            *list = NULL; // Node to be deleted is the root
+        } else if (parent->left == curr) {
+            parent->left = NULL;
+        } else {
+            parent->right = NULL;
+        }
+        free(curr);
+    }
+ 
+    // Case 2: Node to be deleted has one child
+    else if (curr->left == NULL) {
+        if (parent == NULL) {
+            *list = curr->right;
+        } else if (parent->left == curr) {
+            parent->left = curr->right;
+        } else {
+            parent->right = curr->right;
+        }
+        free(curr);
+    }
+    else if (curr->right == NULL) {
+        if (parent == NULL) {
+            *list = curr->left;
+        } else if (parent->left == curr) {
+            parent->left = curr->left;
+        } else {
+            parent->right = curr->left;
+        }
+        free(curr);
+    }
+ 
+    // Case 3: Node to be deleted has two children
+    else {
+        BSTPtr successorParent = curr;
+        BSTPtr successor = curr->right;
+ 
+        while (successor->left != NULL) {
+            successorParent = successor;
+            successor = successor->left;
+        }
+ 
+        if (successorParent != curr)
+            successorParent->left = successor->right;
+        else
+            successorParent->right = successor->right;
+ 
+        curr->data.prodID = successor->data.prodID;
+        free(successor);
+    }
+}
 
+BST *deleteElement(BST *list,int prodID){  //Geeks for Geeks implementation
+	
+    // Base case
+    if (isEmpty(list))
+        return list;
+ 
+    // Recursive calls for ancestors of
+    // node to be deleted
+    if (list->data.prodID > prodID) {
+        list->left = deleteElement(list->left, prodID);
+        return list;
+    }
+    else if (list->data.prodID < prodID) {
+        list->right = deleteElement(list->right, prodID);
+        return list;
+    }
+ 
+    // We reach here when list is the node
+    // to be deleted.
+ 
+    // If one of the children is empty
+    if (list->left == NULL) {
+        BSTPtr temp = list->right;
+        free(list);
+        return temp;
+    }
+    else if (list->right == NULL) {
+        BSTPtr temp = list->left;
+        free(list);
+        return temp;
+    }
+ 
+    // If both children exist
+    else {
+ 
+		BSTPtr currParent = list;
+ 
+        // Find successor
+		BSTPtr succ = list->right;
+        while (succ->left != NULL) {
+            currParent = succ;
+            succ = succ->left;
+        }
+ 
+        // Delete successor.  Since successor
+        // is always left child of its parent
+        // we can safely make successor's right
+        // right child as left of its parent.
+        // If there is no succ, then assign
+        // succ->right to currParent->right
+        if (currParent != list)
+            currParent->left = succ->right;
+        else
+            currParent->right = succ->right;
+ 
+        // Copy Successor Data to list
+        list->data.prodID = succ->data.prodID;
+ 
+        // Delete Successor and return list
+        free(succ);
+        return list;   
+}
+}
 
 
 //Display all (recursive)
