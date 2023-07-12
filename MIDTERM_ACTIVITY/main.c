@@ -106,89 +106,176 @@ void addProduct(ProductList *list, Product p)
 	
 }
 
+int yearDiff(int year1, int year2){
+	return year1-year2;
+}
+int monthDiff(int month1, int month2){
+	return month1-month2;
+}
+int dateDiff(int date1, int date2){
+	return date1-date2;
+}
+
 
 //create a function that returns a stack of product that the earliest to expire is places at the top of the list for all the product from a product list
-ProductStack arrangeByExpiry(ProductList list){
-	printf("\n\n\nREARRANGING USING STACKS\n");
-	ProductStack temp=newProductStackList(MAX);
-	ProductStack Dump=newProductStackList(MAX);
-	ProdPtr *trav;
-	int i=0;
-	int a=0;
-	trav=&list;
-	push(&temp,(*trav)->prod);
-	trav=&(*trav)->next;
-	displayStk(temp);
-	
-		for(;(*trav) != NULL;trav=&(*trav)->next){
-			
-			if((*trav)->prod.expiryDate.year > temp.prods[temp.top-1].expiryDate.year){
-			
-				push(&temp,(*trav)->prod);	
-				printf("\nElement Pushed\n");
-			
-				
-			}else if((*trav)->prod.expiryDate.year == temp.prods[temp.top-1].expiryDate.year){
-				
-											if((*trav)->prod.expiryDate.month > temp.prods[temp.top-1].expiryDate.month){
-													
-													push(&temp,(*trav)->prod);	
-													printf("\nElement Pushed\n");
-												
-											}else if((*trav)->prod.expiryDate.month == temp.prods[temp.top-1].expiryDate.month){
-											
-											
-																	if((*trav)->prod.expiryDate.date > temp.prods[temp.top-1].expiryDate.date){
-																			push(&temp,(*trav)->prod);	
-																			printf("\nElement Pushed\n");
-																			
-																	}else if((*trav)->prod.expiryDate.date == temp.prods[temp.top-1].expiryDate.date){
-																			push(&temp,(*trav)->prod);	
-																			printf("\nElement Pushed\n");
-																			
-																	}else{
-																		while(temp.top!=0 &&(*trav)->prod.expiryDate.date <= temp.prods[temp.top-1].expiryDate.date){
-																		push(&Dump,top(temp));
-																		pop(&temp);
-																		}
-																		push(&temp,(*trav)->prod);	
+ProductStack arrangeByExpiry(ProductList list) {
+    printf("\n\n\nREARRANGING USING STACKS\n");
+    ProductStack temp = newProductStackList(MAX);
+    ProductStack dump = newProductStackList(MAX);
+    ProdPtr* trav;
+    int i = 0;
+    int a = 0;
+    trav = &list;
+    push(&temp, (*trav)->prod);
+    trav = &(*trav)->next;
+    displayStk(temp);
+
+    for (; (*trav) != NULL; trav = &(*trav)->next) {
+		printf("%d --- %d",(*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year);
+        if (yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) > 0) { 
+			printf("\nGreater Year\n");   // list is greater than top of stack - YEAR
+            push(&temp, (*trav)->prod);
+            printf("\nElement Pushed\n");
+        }
+        else if (yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) < 0) {    // list is lesser than top of stack - YEAR
+		printf("\nLesser Year\n");
+            while (temp.top != 0 && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) < 0) {
+                push(&dump, temp.prods[temp.top - 1]);
+                pop(&temp);
+            }
+
+           if(temp.top!=0 && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {		
+							printf("\nSame Year\n");		// list is equal to top of stack - YEAR
+						if (monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) > 0) {
+							push(&temp, (*trav)->prod);
+							printf("\nElement Pushed\n");
+						}
+						else if (monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) < 0) {
+							while (temp.top != 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) < 0  && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+								push(&dump, temp.prods[temp.top - 1]);
+								pop(&temp);
+							}
+											if(temp.top!=0  && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){			// list has the same year and month as the top of stack
+																		printf("\nSame Month\n");
+																	if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) > 0) {
+																		push(&temp, (*trav)->prod);
 																		printf("\nElement Pushed\n");
-																		while(Dump.top!=0){
-																			push(&temp,top(Dump));
-																			pop(&Dump);
-																		}
-																			
 																	}
-												
-											}else{
-												while(temp.top!=0 &&(*trav)->prod.expiryDate.month <= temp.prods[temp.top-1].expiryDate.month){
-												push(&Dump,top(temp));
+																	else if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0) {
+																		while (temp.top != 0 && dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0   && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0   && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+																			push(&dump, temp.prods[temp.top - 1]);
+																			pop(&temp);
+																		}
+																	if(temp.top!=0 &&dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) == 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){	
+																			printf("\nSame Dates\n");
+																		push(&temp, (*trav)->prod);
+																		printf("\nElement Pushed\n");
+																	}else{
+																		push(&temp, (*trav)->prod);
+																		printf("\nElement Pushed AT THE BOTTOM\n");
+																	}
+																	}
+
+												}else{
+													push(&temp, (*trav)->prod);
+													printf("\nElement Pushed at the BOTTOM\n");
+												}
+							}else{
+								printf("\nEqual Month\n");
+								if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) > 0) {
+										push(&temp, (*trav)->prod);
+										printf("\nElement Pushed\n");
+									}
+									else if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0) {
+										while (temp.top != 0 && dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0   && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0   && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+											push(&dump, temp.prods[temp.top - 1]);
+											pop(&temp);
+										}
+									if(temp.top!=0 &&dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) == 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){	
+											printf("\nSame Dates\n");
+										push(&temp, (*trav)->prod);
+										printf("\nElement Pushed\n");
+									}else{
+										push(&temp, (*trav)->prod);
+										printf("\nElement Pushed AT THE BOTTOM\n");
+									}
+									}
+							}
+        	}else{
+				push(&temp, (*trav)->prod);
+				printf("\nElement Pushed at the BOTTOM\n");
+			}
+    	}else{
+			printf("\nEqual YEAR\n");
+			if (monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) > 0) {
+							push(&temp, (*trav)->prod);
+							printf("\nElement Pushed\n");
+						}
+						else if (monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) < 0) {
+							while (temp.top != 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) < 0  && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+								push(&dump, temp.prods[temp.top - 1]);
+								pop(&temp);
+							}
+											if(temp.top!=0  && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){			// list has the same year and month as the top of stack
+																		printf("\nSame Month\n");
+																	if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) > 0) {
+																		push(&temp, (*trav)->prod);
+																		printf("\nElement Pushed\n");
+																	}
+																	else if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0) {
+																		while (temp.top != 0 && dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0   && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0   && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+																			push(&dump, temp.prods[temp.top - 1]);
+																			pop(&temp);
+																		}
+																	if(temp.top!=0 &&dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) == 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){	
+																			printf("\nSame Dates\n");
+																		push(&temp, (*trav)->prod);
+																		printf("\nElement Pushed\n");
+																	}else{
+																		push(&temp, (*trav)->prod);
+																		printf("\nElement Pushed AT THE BOTTOM\n");
+																	}
+																	}
+
+												}else{
+													push(&temp, (*trav)->prod);
+													printf("\nElement Pushed at the BOTTOM\n");
+												}
+								}else{
+									printf("\nEqual Month\n");
+									if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) > 0) {
+											push(&temp, (*trav)->prod);
+											printf("\nElement Pushed\n");
+										}
+										else if (dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0) {
+											while (temp.top != 0 && dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) < 0   && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0   && yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0) {
+												push(&dump, temp.prods[temp.top - 1]);
 												pop(&temp);
-												}
-												push(&temp,(*trav)->prod);	
-												printf("\nElement Pushed\n");
-												while(Dump.top!=0){
-													push(&temp,top(Dump));
-													pop(&Dump);
-												}
 											}
-					
-			}else{
-			
-				while(temp.top!=0 &&(*trav)->prod.expiryDate.year != temp.prods[temp.top-1].expiryDate.year){
-						push(&Dump,top(temp));
-						pop(&temp);
-					} 
-					push(&temp,(*trav)->prod);	
-					printf("\nElement Pushed\n");
-					while(Dump.top!=0){
-						push(&temp,top(Dump));
-						pop(&Dump);	
-					}
+										if(temp.top!=0 &&dateDiff((*trav)->prod.expiryDate.date, temp.prods[temp.top - 1].expiryDate.date) == 0 && monthDiff((*trav)->prod.expiryDate.month, temp.prods[temp.top - 1].expiryDate.month) == 0 &&  yearDiff((*trav)->prod.expiryDate.year, temp.prods[temp.top - 1].expiryDate.year) == 0){	
+												printf("\nSame Dates\n");
+											push(&temp, (*trav)->prod);
+											printf("\nElement Pushed\n");
+										}else{
+											push(&temp, (*trav)->prod);
+											printf("\nElement Pushed AT THE BOTTOM\n");
+										}
+										}
+								}
+							
+						}
+  
+				while (dump.top != 0) {
+				push(&temp, dump.prods[dump.top - 1]);
+				pop(&dump);
 				}
+				
 	}
-	return temp;
+
+
+    return temp;
 }
+
 
 
 
@@ -231,8 +318,8 @@ populateQ(ProductQueue *q){
 	enqueue(q,newProduct(21100,"Detergent",'C',10,newDate(6,12,2003)));
 	enqueue(q,newProduct(31138,"Hairspray",'D',10,newDate(4,12,2003)));
 	enqueue(q,newProduct(43241,"Canton",'E',10,newDate(1,12,2008)));
-	enqueue(q,newProduct(54455,"Spam",'E',10,newDate(2,12,2002)));
-	enqueue(q,newProduct(60000,"Shaving Cream",'E',10,newDate(3,12,2012)));
+	enqueue(q,newProduct(54455,"Spam",'F',10,newDate(2,12,2002)));
+	enqueue(q,newProduct(60000,"Shaving Cream",'G',10,newDate(3,12,2012)));
 
 }
 
