@@ -32,4 +32,6 @@ void display(Dictionary dic);
 bool checkVertex(Dictionary dic, String item);
 void deleteVertex(Dictionary *dic, String item);
 void deleteEdge(Dictionary *dic, String item);
+int getHashIndex(Dictionary dic, String vertex);
+void freeDict(Dictionary *dic);
 #endif
