@@ -120,13 +120,14 @@ void addEdge(Dictionary *dic, String vertex1, String vertex2){
 					dic->List[hash2].value.count++;
 				}
 			}
+				printf("\nInserted Edges\n");
 		}else{
 			printf("\nOne of the edges doesnt have Adjacency Space , CANT INSERT\n");
 		}	
 	}else{
 		printf("\nOne or both vertex does not Exist ,  CANT INSERT\n");
 	}
-	printf("\nInserted Edges\n");
+
 }
 void display(Dictionary dic){
 	int i;
@@ -145,7 +146,6 @@ void display(Dictionary dic){
 		}
 	}
 }
-
 
 
 
