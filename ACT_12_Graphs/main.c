@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-#include "myheader.c"
+#include "myheader.h"
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
@@ -13,9 +13,15 @@ int main(int argc, char *argv[]) {
 	addVertex(&list,"Japan");
 	addVertex(&list,"Coda");
 	addVertex(&list,"Silent");
+	addVertex(&list,"River");
+	addVertex(&list,"Luster");
+	addVertex(&list,"Rein");
 	addEdge(&list,"Japan","Canada");
 	addEdge(&list,"Japan","Coda");
 	addEdge(&list,"Japan","Silent");
+	addEdge(&list,"Japan","River");
+	addEdge(&list,"Japan","Luster");
+	addEdge(&list,"Japan","Rein");
 	display(list);
 	freeDict(&list);
 	return 0;
