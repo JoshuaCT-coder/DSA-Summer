@@ -27,11 +27,11 @@ typedef struct{
 void initDict(Dictionary *dic);
 int hash(char * item);
 void addVertex(Dictionary *dic,String item);
-void addEdge(Dictionary *dic, String item1, String item2);
+void addEdge(Dictionary *dic, String vertex1, String vertex2);
 void display(Dictionary dic);
 bool checkVertex(Dictionary dic, String item);
-void deleteVertex(Dictionary *dic, String item);
-void deleteEdge(Dictionary *dic, String item);
+void deleteVertex(Dictionary *dic, String key);
+void deleteEdge(Dictionary *dic, String vertex1, String vertex2);
 int getHashIndex(Dictionary dic, String vertex);
 void freeDict(Dictionary *dic);
 #endif

@@ -21,7 +21,11 @@ int main(int argc, char *argv[]) {
 	addEdge(&list,"Japan","Silent");
 	addEdge(&list,"Japan","River");
 	addEdge(&list,"Japan","Luster");
-	addEdge(&list,"Japan","Rein");
+	addEdge(&list,"Japan","Rein"); // Should prompt reallocation for more space
+	display(list);
+	deleteEdge(&list,"Japan","Luster"); // should delete both edges from their own vertices
+	display(list);
+	deleteVertex(&list,"Japan");// should delete the vertex and remove from the other edges;
 	display(list);
 	freeDict(&list);
 	return 0;

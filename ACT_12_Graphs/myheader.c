@@ -129,6 +129,89 @@ void addEdge(Dictionary *dic, String vertex1, String vertex2){
 	}
 
 }
+
+void deleteVertex(Dictionary *dic, String key){
+	bool state= checkVertex(*dic,key);
+	 int hash1;
+	 String vertex;
+	if(state){
+		
+		hash1=getHashIndex(*dic,key);
+			if(strcmp(dic->List[hash1].key,key)==0){
+				if(dic->List[hash1].value.data==NULL){
+					strcpy(dic->List[hash1].key,EMPTY_KEY);
+				}else{
+					
+					
+					while(dic->List[hash1].value.count>0){
+					  printf("\nCOUNT: | %d\n",dic->List[hash1].value.count);
+					  strcpy(vertex,dic->List[hash1].value.data[0]);
+					  deleteEdge(dic, key,vertex);
+					}
+					free(dic->List[hash1].value.data);
+					dic->List[hash1].value.data=NULL;
+					
+					strcpy(dic->List[hash1].key,EMPTY_KEY);
+				}
+				printf("\nDeleted Vertex and Edges\n");
+		}
+
+	}
+	
+
+}
+void deleteEdge(Dictionary *dic, String vertex1, String vertex2){
+	bool state1= checkVertex(*dic,vertex1);
+	bool state2= checkVertex(*dic,vertex2);
+	int hash1;
+	int hash2;
+	if(state1 && state2){
+		
+		hash1=getHashIndex(*dic,vertex1);
+		hash2=getHashIndex(*dic,vertex2);
+			if(dic->List[hash2].value.count > 0 && dic->List[hash1].value.count > 0){
+				
+				if(strcmp(dic->List[hash1].key,vertex1)==0){
+					if(dic->List[hash1].value.data!=NULL){
+						int i=0;
+						while(dic->List[hash1].value.count > i && strcmp(dic->List[hash1].value.data[i],vertex2)!=0){i++;}
+							if(i>=dic->List[hash1].value.count){
+								printf("These vertices aren't connected");
+							}else{
+								while(i<dic->List[hash1].value.count){
+								strcpy(dic->List[hash1].value.data[i],dic->List[hash1].value.data[i+1]);
+								i++;
+								}
+								dic->List[hash1].value.count--;
+								strcpy(dic->List[hash1].value.data[dic->List[hash1].value.count],EMPTY_KEY);
+								printf("\n!-Edge Removed-!\n");
+							}	
+					}
+				}
+				if(strcmp(dic->List[hash2].key,vertex2)==0){
+					if(dic->List[hash2].value.data!=NULL){
+						int a=0;
+						while(dic->List[hash2].value.count > a && strcmp(dic->List[hash2].value.data[a],vertex1)!=0){a++;}
+							if(a>=dic->List[hash2].value.count){
+								printf("These vertices aren't connected");
+							}else{
+								while(a<dic->List[hash2].value.count){
+								strcpy(dic->List[hash2].value.data[a],dic->List[hash2].value.data[a+1]);
+								a++;
+								}
+								dic->List[hash2].value.count--;
+								strcpy(dic->List[hash2].value.data[dic->List[hash2].value.count],EMPTY_KEY);
+							}	
+					}
+				}
+			}else{
+				printf("\nOne or Both vertex doesnt have an Edge, Can't delete the edge\n");
+			}
+	}else{
+		printf("\nOne or both vertex doesn't exist\n");
+	}
+}
+
 void display(Dictionary dic){
 	int i;
 	printf("\n%8s | %8s\n","VERTEX","EDGES");
@@ -141,11 +224,9 @@ void display(Dictionary dic){
 					printf("%8s | ",dic.List[i].value.data[a]);
 					a++;
 				}
+				//printf("\n   EDGE COUNT: %d ",dic.List[i].value.count);
 			}
 			printf("\n");
 		}
 	}
 }
-
-
-
