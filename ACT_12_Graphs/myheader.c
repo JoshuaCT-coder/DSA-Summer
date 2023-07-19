@@ -29,7 +29,9 @@ void freeDict(Dictionary *dic){
 	int i;
 	for(i=0;i<MAX;i++){
 	free(dic->List[i].value.data);
+	dic->List[i].value.data=NULL;
 	}
+	printf("\nFreed Space\n");
 }
 
 
@@ -212,12 +214,12 @@ void deleteEdge(Dictionary *dic, String vertex1, String vertex2){
 	}
 }
 
-void display(Dictionary dic){
+void visualize(Dictionary dic){
 	int i;
-	printf("\n%8s | %8s\n","VERTEX","EDGES");
+	printf("\n%8s | %5s | %8s\n","VERTEX","INDEX","EDGES");
 	for(i=0; i<MAX ;i++){
 		if(strcmp(dic.List[i].key,EMPTY_KEY)!=0 && strcmp(dic.List[i].key,"DELETED")!=0){
-			printf("%8s : ",dic.List[i].key);
+			printf("%8s | %5d :",dic.List[i].key,i);
 			if(dic.List[i].value.data!=NULL){
 				int a=0;
 				while(a<dic.List[i].value.count){
@@ -226,7 +228,12 @@ void display(Dictionary dic){
 				}
 				//printf("\n   EDGE COUNT: %d ",dic.List[i].value.count);
 			}
-			printf("\n");
+			}else{
+				printf("%8s : ","EMPTY");	
 		}
+		printf("\n");
 	}
 }
+void DFShelper(Dictionary *dic);
+void BFSdisplay(Dictionary dic);
+void DFSdisplay(Dictionary dic);
