@@ -28,10 +28,15 @@ void initDict(Dictionary *dic);
 int hash(char * item);
 void addVertex(Dictionary *dic,String item);
 void addEdge(Dictionary *dic, String vertex1, String vertex2);
-void display(Dictionary dic);
 bool checkVertex(Dictionary dic, String item);
 void deleteVertex(Dictionary *dic, String key);
 void deleteEdge(Dictionary *dic, String vertex1, String vertex2);
+void visualize(Dictionary dic);
+void BFSdisplay(Dictionary dic);
+void DFSdisplay(Dictionary dic);
+
+//Helper Functions
+void DFShelper(Dictionary *dic);
 int getHashIndex(Dictionary dic, String vertex);
 void freeDict(Dictionary *dic);
 #endif
