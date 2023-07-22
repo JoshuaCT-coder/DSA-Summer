@@ -59,6 +59,7 @@ void freeDict(Dictionary *dic);
 void populateEdges(Dictionary * list);
 void populateVertex(Dictionary *list);
 bool searchVisited(Visited list, String item);
+bool searchVisitedQ(Queue q, String item);
 void visitedDisplay(Visited v);
 void initVisited(Visited *v);
 
@@ -67,7 +68,7 @@ void pop(Stack *s);
 void push(Stack *s, String vertex);
 char * top(Stack * s);
 void displaySTK(Stack s);
-
+int addUnvisitedSTK(Dictionary dic,Stack *s, Visited *v);
 
 
 //Queue Functions
@@ -75,6 +76,6 @@ void initQueue(Queue *q);
 void enqueue(Queue *q, String vertex);
 void dequeue(Queue *q);
 char *front(Queue * q);
-void displayQ(Queue);
-int addUnvisited(Dictionary dic,Stack *s, Visited *v);
+void displayQ(Queue q);
+int addUnvisitedQ(Dictionary dic,Queue *q,Visited v);
 #endif

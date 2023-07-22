@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
 			visualize(list);
 				printf("\nChoose a Starting Vertex: \n");
 				scanf("%s",temp);
-				//BFSdisplay(list,temp);
+				BFSdisplay(list,temp);
 				break;
 			case 7:
 				visualize(list);

@@ -305,14 +305,68 @@ void displaySTK(Stack s){
 
 //Queue Functions
 void initQueue(Queue *q){
-	
+	q->front=-1;
+	q->rear=-1;
+	q->count=0;
+	int i;
+	for(i=0;i<MAX;i++){
+		strcpy(q->data[i],EMPTY_KEY);
+	}
 }
-void enqueue(Queue *q, String vertex);
-void dequeue(Queue *q);
-char *front(Queue * q);
-void displayQ(Queue);
+void enqueue(Queue *q, String vertex){
+	if(q->front<MAX && q->front<=q->rear){
+	if(q->front==-1){
+		q->front++;
+		q->rear++;
+		strcpy(q->data[q->rear],vertex);
+		q->count++;
+	}else{
+		q->rear++;
+		strcpy(q->data[q->rear],vertex);
+		q->count++;
+	}
+	}else{
+		printf("\nEnd of the Queue\n");
+	}
+}
+void dequeue(Queue *q){
+	if(q->front<=q->rear){
+	strcpy(q->data[q->front++],EMPTY_KEY);
+	q->count--;
+	}else{
+		printf("No Elements Cant Dequeue");
+	}
+}
+char *front(Queue * q){
+	return q->data[q->front];
+}
+void displayQ(Queue q){
+	while(q.front <= q.rear){
+		printf("\n%10s\n",front(&q));
+		dequeue(&q);
+	}
+}
 
+int addUnvisitedQ(Dictionary dic,Queue *q,Visited v){
+	
+	int i,hash1,count=0;
+	printf("\nAdding Unvisited\n");
+	hash1=getHashIndex(dic,front(q));
+	
+	for(i=0;i<dic.List[hash1].value.count;i++){
+		if(!searchVisitedQ(*q,dic.List[hash1].value.data[i]) && !searchVisited(v,dic.List[hash1].value.data[i])){
+			enqueue(q,dic.List[hash1].value.data[i]);
+			count++;
+		}
+	}
+	return count;
+}
 
+bool searchVisitedQ(Queue q, String item){
+	int i;
+	for(i=q.front;i<=q.rear &&i<MAX && strcmp(q.data[i],item)!=0;i++){}
+	return (i>q.rear)?false:true;
+}
 
 
 
@@ -331,7 +385,7 @@ void initVisited(Visited *v){
 	v->count=0;
 }
 
-int addUnvisited(Dictionary dic,Stack *s, Visited *v){
+int addUnvisitedSTK(Dictionary dic,Stack *s, Visited *v){
 	
 	int i,hash1,count=0;
 	printf("\nAdding Unvisited\n");
@@ -360,7 +414,28 @@ void visitedDisplay(Visited v){
 
 //TRAVERSAL DISPLAY
 
-void BFSdisplay(Dictionary dic, String vertex);
+void BFSdisplay(Dictionary dic, String vertex){
+	Visited result;
+	Queue list;
+	int added;
+
+	initQueue(&list);
+	initVisited(&result);
+
+	enqueue(&list,vertex);
+
+	while(list.count>0){
+		added= addUnvisitedQ(dic,&list,result);
+		printf("\nUNVISITED NODES ADDED:  %d\n",added);
+		
+		strcpy(result.data[result.count++],front(&list));
+
+		displayQ(list);
+		dequeue(&list);
+	}
+	printf("\n---------BFS TRAVERSAL---------\n");
+	visitedDisplay(result);
+}
 
 void DFSdisplay(Dictionary dic, String vertex){
 	
@@ -383,7 +458,7 @@ void DFSdisplay(Dictionary dic, String vertex){
 			
 		}
 			
-			added = addUnvisited(dic,&vertices,&result);
+			added = addUnvisitedSTK(dic,&vertices,&result);
 			printf("\nUNVISITED NODES ADDED:  %d\n",added);
 			if(added==0){
 				pop(&vertices);
