@@ -5,6 +5,8 @@
 #include <ctype.h>
 #include "myheader.h"
 
+
+
 int hash(char * item){
 	char firstletter = toupper(item[0]);
 
@@ -13,16 +15,15 @@ int hash(char * item){
     return hashvalue;
 }
 
-
 void initDict(Dictionary *dic){
 	int i;
 	for(i=0;i<MAX;i++){
 	strcpy(dic->List[i].key,EMPTY_KEY);
 	dic->List[i].value.count=0;
-	dic->List[i].value.max=5;
+	dic->List[i].value.max=10;
 	dic->List[i].value.data=NULL;
 	}
-	printf("\nitialization complete\n");
+	printf("\nInitialization complete\n");
 }
 
 void freeDict(Dictionary *dic){
@@ -39,15 +40,21 @@ void addVertex(Dictionary *dic,String item){
 	int hashval=hash(item);
 	if(strcmp(dic->List[hashval].key,EMPTY_KEY)==0){
 		strcpy(dic->List[hashval].key,item);
+		printf("\n Inserted vertex\n");
 	}else if(strcmp(dic->List[hashval].key,item)==0){
 		printf("\nVertex Already exists\n");
 	}else{
-		while (strcmp(dic->List[hashval].key,EMPTY_KEY)!=0){
+		while (strcmp(dic->List[hashval].key,EMPTY_KEY)!=0 && strcmp(dic->List[hashval].key,item)!=0){
         hashval = (hashval + 1) % MAX;
     }
+	if(strcmp(dic->List[hashval].key,item)!=0){
     strcpy(dic->List[hashval].key,item);
-	}
 	printf("\n Inserted vertex\n");
+	}else{
+		printf("\nVertex Already exists\n");
+	}
+	}
+	
 }
 
 bool checkVertex(Dictionary dic, String item){
@@ -91,12 +98,13 @@ int getHashIndex(Dictionary dic, String vertex){
 }
 
 
-void addEdge(Dictionary *dic, String vertex1, String vertex2){
+void addSortedEdge(Dictionary *dic, String vertex1, String vertex2){
 	bool state1= checkVertex(*dic,vertex1);
 	bool state2= checkVertex(*dic,vertex2);
 	int hash1;
 	int hash2;
-
+	int i;
+	int a;
 
 	if (state1 && state2){
 		hash1=getHashIndex(*dic,vertex1);
@@ -108,9 +116,21 @@ void addEdge(Dictionary *dic, String vertex1, String vertex2){
 					strcpy(dic->List[hash1].value.data[dic->List[hash1].value.count],vertex2);
 					dic->List[hash1].value.count++;
 				}else{
-					strcpy(dic->List[hash1].value.data[dic->List[hash1].value.count],vertex2);
+					for(i=0;i<dic->List[hash1].value.count && strcmp(dic->List[hash1].value.data[i],vertex2)<0 && strcmp(dic->List[hash1].value.data[i],vertex2)!=0;i++){}
+					if(strcmp(dic->List[hash1].value.data[i],vertex2)!=0){
+					if(i<dic->List[hash1].value.count){
+					
+						for(a=dic->List[hash1].value.count;a>=i;a--){
+							strcpy(dic->List[hash1].value.data[a],dic->List[hash1].value.data[a-1]);
+						}						
+					  }
+					strcpy(dic->List[hash1].value.data[i],vertex2);
 					dic->List[hash1].value.count++;
+					printf("\nInserted Edge\n");
+					}else{
+						printf("\nThe Connection Already Exists\n");
 					}
+				}
 				}
 			if(strcmp(dic->List[hash2].key,vertex2)==0){
 				if(dic->List[hash2].value.data==NULL){
@@ -118,11 +138,23 @@ void addEdge(Dictionary *dic, String vertex1, String vertex2){
 					strcpy(dic->List[hash2].value.data[dic->List[hash2].value.count],vertex1);
 					dic->List[hash2].value.count++;
 				}else{
-					strcpy(dic->List[hash2].value.data[dic->List[hash2].value.count],vertex2);
+					for(i=0;i<dic->List[hash2].value.count && strcmp(dic->List[hash2].value.data[i],vertex1)<0 && strcmp(dic->List[hash2].value.data[i],vertex1)!=0;i++){}
+					if(strcmp(dic->List[hash2].value.data[i],vertex1)!=0){
+					if(i<dic->List[hash2].value.count){
+						
+						for(a=dic->List[hash2].value.count;a>=i;a--){
+							strcpy(dic->List[hash2].value.data[a],dic->List[hash2].value.data[a-1]);
+						}						
+					  }
+					strcpy(dic->List[hash2].value.data[i],vertex1);
 					dic->List[hash2].value.count++;
+					printf("\nInserted Edge\n");
+					}else{
+						printf("\nThe Connection Already Exists\n");
+					}
 				}
 			}
-				printf("\nInserted Edges\n");
+				
 		}else{
 			printf("\nOne of the edges doesnt have Adjacency Space , CANT INSERT\n");
 		}	
@@ -228,12 +260,168 @@ void visualize(Dictionary dic){
 				}
 				//printf("\n   EDGE COUNT: %d ",dic.List[i].value.count);
 			}
-			}else{
-				printf("%8s : ","EMPTY");	
-		}
-		printf("\n");
+			printf("\n");
+			}//else{
+		// 		printf("%8s : ","EMPTY");	
+		// }
+		
 	}
 }
-void DFShelper(Dictionary *dic);
-void BFSdisplay(Dictionary dic);
-void DFSdisplay(Dictionary dic);
+
+
+
+
+
+//STACK Functions
+void initStack(Stack *s){
+	s->top=0;
+	
+}
+void pop(Stack *s){
+	s->top--;
+	
+}
+void push(Stack *s, String vertex){
+	strcpy(s->list[s->top++],vertex);
+	
+}
+char * top(Stack *s){
+	return s->list[s->top-1];
+}
+void displaySTK(Stack s){
+	Stack temp;
+	initStack(&temp);
+	while(s.top>0){
+		push(&temp,top(&s));
+		pop(&s);
+	}
+	printf("\nPRINTING STACK\n");
+	while(temp.top>0){
+		printf("\n%10s\n",top(&temp));
+		pop(&temp);
+	}
+}
+
+
+//Queue Functions
+void initQueue(Queue *q){
+	
+}
+void enqueue(Queue *q, String vertex);
+void dequeue(Queue *q);
+char *front(Queue * q);
+void displayQ(Queue);
+
+
+
+
+
+//VISITED FUNCTIONS
+bool searchVisited(Visited list ,String item){
+int i;
+for(i=0;i<list.count && strcmp(list.data[i],item)!=0;i++){}
+return (i>=list.count)?false:true;
+}
+
+void initVisited(Visited *v){
+	int i;
+	for(i=0;i<MAX;i++){
+		strcpy(v->data[i],EMPTY_KEY);
+	}
+	v->count=0;
+}
+
+int addUnvisited(Dictionary dic,Stack *s, Visited *v){
+	
+	int i,hash1,count=0;
+	printf("\nAdding Unvisited\n");
+	hash1=getHashIndex(dic,top(s));
+	
+	for(i=dic.List[hash1].value.count-1;i>=0;i--){
+		if(!searchVisited(*v,dic.List[hash1].value.data[i])){
+			push(s,dic.List[hash1].value.data[i]);
+			count++;
+		}
+	}
+	return count;
+}
+void visitedDisplay(Visited v){
+	int i;
+	for(i=0;i<v.count;i++){
+		printf("\n%10s\n",v.data[i]);
+	}
+	printf("\n    TOTAL #of VERTEXES: %d\n",v.count);
+}
+
+
+
+
+
+
+//TRAVERSAL DISPLAY
+
+void BFSdisplay(Dictionary dic, String vertex);
+
+void DFSdisplay(Dictionary dic, String vertex){
+	
+	Stack vertices;
+	Visited result;
+	int i;
+	int added;
+
+	initVisited(&result);
+	initStack(&vertices);
+	push(&vertices,vertex);
+	
+	displaySTK(vertices);
+
+	visitedDisplay(result);
+	while(vertices.top!=0){
+		if(!searchVisited(result,top(&vertices))){
+			
+			strcpy(result.data[result.count++],top(&vertices));
+			
+		}
+			
+			added = addUnvisited(dic,&vertices,&result);
+			printf("\nUNVISITED NODES ADDED:  %d\n",added);
+			if(added==0){
+				pop(&vertices);
+			}	
+			displaySTK(vertices);
+	}
+
+
+	printf("\n---------DFS TRAVERSAL---------\n");
+	visitedDisplay(result);
+}
+
+
+
+//POPULATE VERTEX AND STACKS HAS THE CAPACITY TO REJECT DUPLICATES
+void populateVertex(Dictionary *list){
+	addVertex(list,"Canada");
+	addVertex(list,"Japan");
+	addVertex(list,"Coda");
+	addVertex(list,"Silent");
+	addVertex(list,"River");
+	addVertex(list,"Luster");
+	addVertex(list,"Rein");
+
+}
+
+void populateEdges(Dictionary *list){
+
+	addSortedEdge(list,"Silent","Canada");
+	addSortedEdge(list,"Silent","Rein");
+	addSortedEdge(list,"Silent","River");
+	addSortedEdge(list,"Silent","Coda");
+
+	addSortedEdge(list,"Luster","Coda");
+	addSortedEdge(list,"Luster","Silent");
+
+	addSortedEdge(list,"Canada","Rein");
+
+	addSortedEdge(list,"Japan","Luster");
+	addSortedEdge(list,"Japan","Rein"); 
+}
